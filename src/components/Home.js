@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import { Box, Button, Menu, MenuItem, Link } from "@mui/material";
+// import useSound from "use-sound";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import Hiddenput from "../components/Hiddenput";
 import "../styles/App.css";
+// import nokiabeep from "../sounds/nokiabeep.wav";
 
 const Home = () => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [count, setCount] = useState(1);
+  const [showInput, setShowInput] = useState(false);
+  // const [beep] = useSound(nokiabeep, { interrupt: true });
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -12,6 +18,18 @@ const Home = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleShowInput = () => {
+    if (count > 5) return;
+
+    setCount(count + 1);
+    // access();
+    // beep();
+    if (count === 5) {
+      setShowInput(true);
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -24,6 +42,7 @@ const Home = () => {
         gridTemplateAreas: `"header header header"
                             ". links ."`,
       }}
+      onClick={handleShowInput}
     >
       <Box
         component="span"
@@ -49,6 +68,7 @@ const Home = () => {
         >
           Projects
         </Button>
+        <Hiddenput display={showInput} />
         <Menu
           id="projects"
           anchorEl={anchorEl}
@@ -58,17 +78,6 @@ const Home = () => {
             "aria-labelledby": "projects",
           }}
         >
-          <MenuItem>
-            <Link
-              href="https://www.pfamtx.com"
-              sx={{
-                textDecoration: "none",
-                color: "black",
-              }}
-            >
-              PFAMTX
-            </Link>
-          </MenuItem>
           <MenuItem>
             <Link
               href="https://www.github.com/svhong"
